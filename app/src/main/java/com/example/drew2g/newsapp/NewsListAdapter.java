@@ -14,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.drew2g.newsapp.utilities.Contract;
+
 public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ItemHolder> {
     private Cursor cursor;
     private ItemClickListener listener;
@@ -59,11 +61,11 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ItemHo
 
         public void bind(ItemHolder holder, int pos) {
             cursor.moveToPosition(pos);
-            id = cursor.getLong(cursor.getColumnIndex(Contract.TABLE_TODO._ID));
+            id = cursor.getLong(cursor.getColumnIndex(Contract.TABLE_NEWS._ID));
 
-            head = cursor.getString(cursor.getColumnIndex(Contract.TABLE_TODO.COLUMN_NAME_DUE_DATE));
-            bod = cursor.getString(cursor.getColumnIndex(Contract.TABLE_TODO.COLUMN_NAME_DESCRIPTION));
-            tim = cursor.getInt(cursor.getColumnIndex(Contract.TABLE_TODO.COLUMN_NAME_COMPLETED));
+            head = cursor.getString(cursor.getColumnIndex(Contract.TABLE_NEWS.COLUMN_NAME_HEADLINE));
+            bod = cursor.getString(cursor.getColumnIndex(Contract.TABLE_NEWS.COLUMN_NAME_BODY));
+            tim = cursor.getString(cursor.getColumnIndex(Contract.TABLE_NEWS.COLUMN_NAME_TIME));
 
             headline.setText(head);
             body.setText(bod);
@@ -81,4 +83,4 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ItemHo
 
 
 
-}
+

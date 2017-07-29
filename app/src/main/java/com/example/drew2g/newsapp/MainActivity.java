@@ -1,6 +1,7 @@
 package com.example.drew2g.newsapp;
 
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 
@@ -27,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar progress;
     private RecyclerView rv;
     private Cursor cursor;
+    NewsListAdapter adapter;
+    private SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemNumber = item.getItemId();
@@ -54,10 +56,8 @@ public class MainActivity extends AppCompatActivity {
         if (itemNumber == R.id.search) {
             String s = search.getText().toString();
             //FetchNews task = new FetchNews(s);
-            NewsTextView.setText("");
+            //NewsTextView.setText("");
             new FetchNews().execute(s);
-
-
         }
         return true;
     }
