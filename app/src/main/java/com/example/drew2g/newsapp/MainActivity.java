@@ -1,33 +1,43 @@
 package com.example.drew2g.newsapp;
 
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
+
+import com.example.drew2g.newsapp.data.NewsItem;
 import com.example.drew2g.newsapp.utilities.NetworkUtils;
 import com.example.drew2g.newsapp.data.NewsPreferences;
 import com.example.drew2g.newsapp.utilities.NewsJsonUtils;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.view.Menu;
+import android.support.v7.widget.RecyclerView;
 
 import java.net.URL;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView NewsTextView;
+    //private TextView NewsTextView;
     private EditText search;
     private ProgressBar progress;
+    private RecyclerView rv;
+    private Cursor cursor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        NewsTextView = (TextView) findViewById(R.id.news_data);
+        //NewsTextView = (TextView) findViewById(R.id.news_data);
         progress = (ProgressBar) findViewById(R.id.progressBar);
         search = (EditText) findViewById(R.id.searchQuery);
+        rv = (RecyclerView) findViewById(R.id.recyclerView);
+        rv.setLayoutManager(new LinearLayoutManager(this));
         loadNewsData();
     }
     @Override
@@ -71,8 +81,10 @@ public class MainActivity extends AppCompatActivity {
             URL newsRequestUrl = NetworkUtils.buildUrl(source);
 
             try {
+
                 String jsonNewsResponse = NetworkUtils
                         .getResponseFromHttpUrl(newsRequestUrl);
+
 
                 String[] simpleNewsData = NewsJsonUtils
                         .getNewsFromJSON(MainActivity.this, jsonNewsResponse);
@@ -104,8 +116,13 @@ public class MainActivity extends AppCompatActivity {
                  * the "\n\n\n" after the String is to give visual separation between each String in the
                  * TextView. Later, we'll learn about a better way to display lists of data.
                  */
+
+                ArrayList<NewsItem> newsItems = new ArrayList<NewsItem>(); //new ArrayList to hold News Items
+
                 for (String newsString : newsData) {
-                    NewsTextView.append((newsString) + "\n\n\n");
+                    //NewsTextView.append((newsString) + "\n\n\n");
+                    NewsItem temp = new NewsItem("",newsString);
+                    newsItems.add(temp); //add each NewsItem to Arraylist
                 }
             }
         }
